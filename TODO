@@ -1,4 +1,6 @@
-Create player class
 Store persistent player data in .config file
 More helpful default help message (when there are no arguments)
 add GPL headers to all files
+make game functions (e.g. list-challenges, solve-challenge) player public methods
+implement solve_challenge
+put everything into a module

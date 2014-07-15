@@ -1,41 +1,39 @@
+#! /usr/bin/python3
+
 import sys
 import argparse
 import colorama
 from challenges import challenges
 
-def list_challenges(args):
-    level_challenges = [c for c in challenges if c.Level == dummy_player.current_level]
+"""
+Lists the challenges currently available to the player
+"""
+def list_challenges(args, player):
+    level_challenges = [c for c in challenges if c.Level == player.current_level]
     column_width = max(len(c.Name) for c in level_challenges)
     for challenge in level_challenges:
-        if challenge in dummy_player.completed:
+        if challenge in player.completed:
             color = colorama.Fore.GREEN
         else:
             color = colorama.Fore.RED
         print(color + "%s\t%dXP" % (challenge.Name.ljust(column_width), challenge.XP))
 
-def challenge_info(args):
+"""
+Prints info about the challenge specified by the player
+"""
+def challenge_info(args, player):
     for challenge in challenges:
-        if challenge.Level == dummy_player.current_level and challenge.Name == args.challenge_name:
+        if challenge.Level == player.current_level and challenge.Name == args.challenge_name:
             #TODO prettier printing
             print(challenge.Story)
             break
     else:
-        print("No challenge named ``%s'' on level %d" % (args.challenge_name, dummy_player.current_level))
+        print("No challenge named ``%s'' on level %d" % (args.challenge_name, player.current_level))
 
-def solve_challenge(args):
+def solve_challenge(args, player):
     print("Hey")
 
-class Player:
-    def __init__(self):
-        self.completed = []
-        self.current_level = 1
-
-if __name__ == "__main__":
-    colorama.init(autoreset=True)
-
-    dummy_player = Player()
-    dummy_player.completed.append(challenges[0])
-
+def createParser():
     parser = argparse.ArgumentParser(description='Learn Programming by climbing the corporate ladder')
     subcommands = parser.add_subparsers(title="Commands",
                                         description="Use these commands to interact with the game",
@@ -53,9 +51,28 @@ if __name__ == "__main__":
     s.add_argument('solution', help="Puzzle solution script", type=open)
     s.set_defaults(func=solve_challenge)
 
+    return parser
+
+class Player:
+    def __init__(self):
+        self.completed = []
+        self.current_level = 1
+        self.XP = 0
+        self.time_passes = 0
+        self.length_passes = 0
+
+if __name__ == "__main__":
+    colorama.init(autoreset=True)
+
+    parser = createParser()
+
+    #TODO read in from config file
+    dummy_player = Player()
+    dummy_player.completed.append(challenges[0])
+
     args = parser.parse_args()
     if len(sys.argv) == 1:
         #TODO better default help function for beginners
         parser.print_help()
     else:
-        args.func(args)
+        args.func(args, dummy_player)
