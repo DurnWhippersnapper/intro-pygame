@@ -1,0 +1,4 @@
+Create player class
+Store persistent player data in .config file
+More helpful default help message (when there are no arguments)
+add GPL headers to all files
