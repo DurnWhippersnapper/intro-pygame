@@ -5,6 +5,7 @@ from levels.level1.mult import mult_challenge
 
 challenges = [add_challenge, mult_challenge]
 
-level1 = Level(XP=10,
+level1 = Level(Name='Level 1',
+               neededXP=10,
                Story="This is level 1",
                Challenges = challenges)

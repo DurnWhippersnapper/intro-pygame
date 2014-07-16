@@ -6,7 +6,8 @@ Challenge = namedtuple('Challenge', ['Name',
                                      'XP',
                                      'Verify'])
 
-Level = namedtuple('Level', ['XP',
+Level = namedtuple('Level', ['Name',
+                             'neededXP',
                              'Story',
                              'Challenges'])
 

@@ -2,3 +2,6 @@ More helpful default help message (when there are no arguments)
 add GPL headers to all files
 implement solve_challenge
 put everything into a module
+make new user intro message
+remove "args" from all of the functions in the player class (might need to make wrappers in pygame.py)
+make commands bright in intro message, and fix intro message formatting in general
