@@ -1,12 +1,30 @@
 import colorama
+import pickle
+import os
 from levels import levels
 
 class Player:
     def __init__(self):
-        #a list of challenge names in the current level that the player has solved
         self.completed = []
         self.current_level_index = 0
+        self.newuser = True
 
+        home = os.path.expanduser('~')
+        self.savefile = os.path.join(home, '.config', 'pygame', 'pygame.save')
+        self.loadFromSaveFile()
+
+    def loadFromSaveFile(self):
+        if os.path.isfile(self.savefile):
+            with open(self.savefile, "rb") as f:
+                self.completed = pickle.load(f)
+                self.newuser = False
+
+    def saveToSaveFile(self):
+        (savedir, _) = os.path.split(self.savefile)
+        os.makedirs(savedir, exist_ok = True)
+        with open(self.savefile, "w+b") as f:
+            pickle.dump(self.completed, f)
+        
     """
     Lists the challenges currently available to the player
     """

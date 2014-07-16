@@ -26,17 +26,24 @@ def createParser():
 
     return parser
 
+def printNewUserIntro():
+    print("Hey new user!!!")
+
 if __name__ == "__main__":
     colorama.init(autoreset=True)
 
     parser = createParser()
 
-    #TODO read in from config file
-    dummy_player = Player()
+    player = Player()
 
-    args = parser.parse_args()
-    if len(sys.argv) == 1:
-        #TODO better default help function for beginners
-        parser.print_help()
+    if player.newuser:
+        printNewUserIntro()
     else:
-        args.func(dummy_player, args)
+        args = parser.parse_args()
+        if len(sys.argv) == 1:
+            #TODO better default help function for beginners
+            parser.print_help()
+        else:
+            args.func(player, args)
+
+    player.saveToSaveFile()
